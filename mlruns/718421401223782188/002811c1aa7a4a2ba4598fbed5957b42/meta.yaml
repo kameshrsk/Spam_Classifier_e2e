@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/kamesh/Desktop/Data%20Analysis/ML/MLOps/Spam%20Classifier/mlruns/718421401223782188/002811c1aa7a4a2ba4598fbed5957b42/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '718421401223782188'
+lifecycle_stage: active
+run_id: 002811c1aa7a4a2ba4598fbed5957b42
+run_name: painted-hawk-852
+run_uuid: 002811c1aa7a4a2ba4598fbed5957b42
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707634108024
+status: 1
+tags: []
+user_id: kames

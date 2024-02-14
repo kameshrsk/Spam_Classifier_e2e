@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/kamesh/Desktop/Data%20Analysis/ML/MLOps/Spam%20Classifier/mlruns/718421401223782188/f877c7463cb14c8faaed4f80b9b2e959/artifacts
+end_time: 1707664109815
+entry_point_name: ''
+experiment_id: '718421401223782188'
+lifecycle_stage: active
+run_id: f877c7463cb14c8faaed4f80b9b2e959
+run_name: receptive-snail-958
+run_uuid: f877c7463cb14c8faaed4f80b9b2e959
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707661861547
+status: 4
+tags: []
+user_id: kames

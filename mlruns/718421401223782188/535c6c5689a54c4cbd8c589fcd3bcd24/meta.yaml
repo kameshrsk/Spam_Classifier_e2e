@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/kamesh/Desktop/Data%20Analysis/ML/MLOps/Spam%20Classifier/mlruns/718421401223782188/535c6c5689a54c4cbd8c589fcd3bcd24/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '718421401223782188'
+lifecycle_stage: active
+run_id: 535c6c5689a54c4cbd8c589fcd3bcd24
+run_name: nimble-grouse-688
+run_uuid: 535c6c5689a54c4cbd8c589fcd3bcd24
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707491795441
+status: 1
+tags: []
+user_id: kames

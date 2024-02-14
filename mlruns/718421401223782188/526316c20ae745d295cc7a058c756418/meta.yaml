@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/kamesh/Desktop/Data%20Analysis/ML/MLOps/Spam%20Classifier/mlruns/718421401223782188/526316c20ae745d295cc7a058c756418/artifacts
+end_time: 1707490749302
+entry_point_name: ''
+experiment_id: '718421401223782188'
+lifecycle_stage: active
+run_id: 526316c20ae745d295cc7a058c756418
+run_name: upset-wasp-315
+run_uuid: 526316c20ae745d295cc7a058c756418
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707488048886
+status: 3
+tags: []
+user_id: kames

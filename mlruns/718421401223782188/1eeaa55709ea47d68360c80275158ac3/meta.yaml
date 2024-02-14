@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/kamesh/Desktop/Data%20Analysis/ML/MLOps/Spam%20Classifier/mlruns/718421401223782188/1eeaa55709ea47d68360c80275158ac3/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '718421401223782188'
+lifecycle_stage: active
+run_id: 1eeaa55709ea47d68360c80275158ac3
+run_name: fortunate-rook-395
+run_uuid: 1eeaa55709ea47d68360c80275158ac3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1707464630281
+status: 1
+tags: []
+user_id: kames

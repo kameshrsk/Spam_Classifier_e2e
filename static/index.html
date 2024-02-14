@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Spam Message Classification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Spam Message Classification</h1>
+    <form id="message-form">
+        <label for="message">Message:</label><br>
+        <textarea id="message" name="message"></textarea><br>
+        <input type="submit" value="Classify">
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('message-form').onsubmit = function(event) {
+            event.preventDefault();
+    
+            var message = document.getElementById('message').value;
+    
+            // Get the current URL and extract the hostname (IP) and port
+            var url = new URL(window.location.href);
+            var ip = url.hostname;
+            var port = url.port;
+    
+            fetch('http://' + ip + ':' + port + '/classify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    Message: message,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').textContent = 'The message is predicted to be: ' + data.Prediction;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        };
+    </script>
+    
+</body>
+</html>
