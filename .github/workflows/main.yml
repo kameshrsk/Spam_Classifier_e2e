@@ -3,6 +3,9 @@ name: Spam Message Classifier
 jobs:
   ci_pipeline:
     runs-on: ubuntu-latest
+    env: 
+      CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
+      CI_COMMIT_AUTHOR: Continuous Integration
 
     steps:
       - uses: actions/checkout@v4
@@ -38,10 +41,10 @@ jobs:
       
       - name: Commit and push changes
         run: |
-         git config --global user.email "action@github.com"
-         git config --global user.name "GitHub Action"
+         git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
+         git config --global user.email "kameshrsk@users.noreply.github.com"
          git add .
-         git commit -m "Update model"
+         git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
          git push
          dvc push
 
@@ -49,7 +52,7 @@ jobs:
         run: |
          python accuracy.py
          git add accuracy.txt
-         git commit -m "Modified with the Newly trained model Accuracy"
+         git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
          git push
 
       - name: Threshold Satisfaction
