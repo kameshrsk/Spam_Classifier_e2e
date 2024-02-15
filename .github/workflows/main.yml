@@ -1,0 +1,103 @@
+name: Spam Message Classifier
+'on': push
+jobs:
+  ci_pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+         fetch-depth: 0
+
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+         python-version: 3.11
+
+      - name: Install Dependencies
+        run: |
+         python -m pip install --upgrade pip
+         if [ -f requirements.txt ]
+         then
+          pip install -r requirements.txt
+         fi
+      
+      - name: Format
+        run: |
+         black api.py
+
+      - name: Lint
+        run: |
+         pylint --disable=R,C api.py
+
+      - name: Train Model
+        run: |
+         python run --end-to-end --path "data\SMSSpamCollection" --num-labels 2 --num-epochs 2 --learning-rate 0.00001
+
+      - name: Accuracy Check
+        run: |
+         python accuracy.py
+
+      - name: Threshold Satisfaction
+        run: |
+         accuracy=$(cat accuracy.txt)
+         threshold=0.90
+         if (( $(echo "$accuracy < $threshold" | bc -l) ))
+         then
+           echo "The Model is not Performing well. It achieves an accuracy of $accuracy % which is less than the threshold"
+           exit 1
+         else
+           echo "The Model achives as accuracy of $accuracy % which is good enough for deploymnet"
+         fi
+  cd_pipeline:
+    runs-on: self-hosted
+    needs: ci_pipeline
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Get Model From DVC
+        run: |
+          python get_model.py
+        
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY_NAME }}
+          IMAGE_TAG: latest
+        run: |
+          # Build a docker container and
+          # push it to ECR so that it can
+          # be deployed to ECS.
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+      
+      - name: Pull latest images
+        run: |
+         docker rm -f $(docker ps -q) || true
+         docker rmi $(docker images -q) || true
+         docker pull ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+
+      - name: Run Docker Image to serve users
+        run: |
+         docker run -d -p 8000:8000 --name=spam_classifier -e 'AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}' -e 'AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}' -e 'AWS_REGION=${{ secrets.AWS_REGION }}'  ${{secrets.AWS_ECR_LOGIN_URI}}/${{ secrets.ECR_REPOSITORY_NAME }}:latest
+
+      - name: Clean previous images and Containers
+
+        run: |
+          docker system prune -f
+      
