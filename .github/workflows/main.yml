@@ -24,6 +24,7 @@ jobs:
 
       - name: Train Model
         run: |
+         echo "MLFLOW_TRACKING_URI=${{ secrets.MLFLOW_TRACKING_URI }}" >> $GITHUB_ENV
          python run.py --end-to-end --path "data\SMSSpamCollection" --num-labels 2 --num-epochs 2 --learning-rate 0.00001
 
       - name: Accuracy Check

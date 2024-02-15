@@ -1,6 +1,6 @@
 import click
 
-from zenml.client import Client
+import mlflow
 
 from pipeline.data_pipeline import data_pipeline
 from pipeline.model_training_pipeline import model_training_pipeline
@@ -96,5 +96,6 @@ def main(load_data:bool=False,
 
 if __name__=="__main__":
 
-    print(Client().active_stack.experiment_tracker.get_tracking_uri())
+    mlflow.set_tracking_uri("http://ec2-15-207-108-193.ap-south-1.compute.amazonaws.com:5000/")
+
     main()

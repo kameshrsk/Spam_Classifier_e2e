@@ -16,9 +16,7 @@ from tqdm.auto import tqdm
 
 import mlflow
 
-experiment_tracker=Client().active_stack.experiment_tracker
-
-@step(experiment_tracker=experiment_tracker.name, enable_cache=True)
+@step(enable_cache=True)
 def train_model(training_batch:DataLoader, num_labels:int, num_epochs:int, learning_rate:float)-> BertForSequenceClassification:
 
     model=BertForSequenceClassification.from_pretrained("bert-base-uncased")

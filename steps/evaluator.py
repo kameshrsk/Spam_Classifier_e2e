@@ -22,10 +22,9 @@ from .tokenizer import tokenize_data
 
 import logging
 
-experiment_tracker=Client().active_stack.experiment_tracker
 
 
-@step(experiment_tracker=experiment_tracker.name, enable_cache=False)
+@step(enable_cache=False)
 def evaluate_model(model:BertForSequenceClassification, testing_batch:DataLoader)->Tuple[
     Annotated[float, "accuracy"],
     Annotated[float, "f1"]
