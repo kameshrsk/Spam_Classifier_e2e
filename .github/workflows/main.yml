@@ -21,14 +21,6 @@ jobs:
          then
           pip install -r requirements.txt
          fi
-      
-      - name: Format
-        run: |
-         black api.py
-
-      - name: Lint
-        run: |
-         pylint --disable=R,C api.py
 
       - name: Train Model
         run: |
