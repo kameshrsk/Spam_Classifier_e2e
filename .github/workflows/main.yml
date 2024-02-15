@@ -24,7 +24,7 @@ jobs:
 
       - name: Train Model
         run: |
-         python run --end-to-end --path "data\SMSSpamCollection" --num-labels 2 --num-epochs 2 --learning-rate 0.00001
+         python run.py --end-to-end --path "data\SMSSpamCollection" --num-labels 2 --num-epochs 2 --learning-rate 0.00001
 
       - name: Accuracy Check
         run: |
