@@ -13,4 +13,4 @@ transformers==4.31.0
 torchvision==0.17.0
 dvc
 datasets
-boto
+boto3
