@@ -32,9 +32,29 @@ jobs:
         run: |
          python run.py --end-to-end --path "data/SMSSpamCollection" --num-labels 2 --num-epochs 2 --learning-rate 0.00001
 
+      - name: Configure DVC
+        run: |
+         dvc init
+         dvc remote add -d origin ${{ secrets.DVC_STORAGE_URL }}
+         dvc remote modify origin access_key_id ${{ secrets.ACCESS_KEY_ID }}
+         dvc remote modify origin secret_access_key ${{ secrets.SECRET_ACCESS_KEY }}
+         dvc add saved_model/model.pkl
+      
+      - name: Commit and push changes
+        run: |
+         git config --global user.email "action@github.com"
+         git config --global user.name "GitHub Action"
+         git add .
+         git commit -m "Update model"
+         git push
+         dvc push
+
       - name: Accuracy Check
         run: |
          python accuracy.py
+         git add accuracy.txt
+         git commit -m "Modified with the Newly trained model Accuracy"
+         git push
 
       - name: Threshold Satisfaction
         run: |
