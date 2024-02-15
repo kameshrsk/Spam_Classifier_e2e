@@ -1,4 +1,6 @@
 [core]
-    remote = remote
-['remote "remote"']
-    url = s3://dvcremote532/saved_model
+    remote = remote_storage
+['remote "remote_storage"']
+    url = s3://dvcremote567/saved_model
+['remote "origin"']
+    url = s3://dvcremote567
