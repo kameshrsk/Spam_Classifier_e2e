@@ -24,7 +24,7 @@ def load_data(path:str)-> Tuple[
     Annotated[DataLoader, "testing_batch"]
 ]:
 
-    data=pd.read_csv("C:/Users/kamesh/Desktop/Data Analysis/ML/MLOps/Spam Classifier/data/SMSSpamCollection", sep='\t', names=["labels", "Message"])
+    data=pd.read_csv(path, sep='\t', names=["labels", "Message"])
 
     ham=data[data['labels']=='ham'].sample(500)
     spam=data[data['labels']=='spam'].sample(500)
