@@ -69,6 +69,14 @@ jobs:
          else
            echo "The Model achives as accuracy of $accuracy % which is good enough for deploymnet"
          fi
+
+      - name: Get Model From DVC
+        run: |
+          python get_model.py
+          git add get_model.py
+          git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
+          git push
+        
   cd_pipeline:
     runs-on: self-hosted
     needs: ci_pipeline
@@ -82,18 +90,6 @@ jobs:
          echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
          echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
          echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
-
-      - name: Install Dependencies
-        run: |
-         python3 -m pip install --upgrade pip
-         if [ -f requirements.txt ]
-         then
-          pip3 install -r requirements.txt
-         fi
-
-      - name: Get Model From DVC
-        run: |
-          python3 get_model.py
 
       - name: Login to Amazon ECR
         id: login-ecr
