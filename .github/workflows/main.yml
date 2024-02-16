@@ -85,7 +85,7 @@ jobs:
 
       - name: Get Model From DVC
         run: |
-          python get_model.py
+          python3 get_model.py
 
       - name: Login to Amazon ECR
         id: login-ecr
