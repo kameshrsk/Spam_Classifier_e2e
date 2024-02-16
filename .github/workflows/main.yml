@@ -85,6 +85,7 @@ jobs:
 
       - name: Get Model From DVC
         run: |
+          pip install dvc
           python3 get_model.py
 
       - name: Login to Amazon ECR
