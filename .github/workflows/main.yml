@@ -73,9 +73,6 @@ jobs:
       - name: Get Model From DVC
         run: |
           python get_model.py
-          git add get_model.py
-          git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
-          git push
         
   cd_pipeline:
     runs-on: self-hosted
