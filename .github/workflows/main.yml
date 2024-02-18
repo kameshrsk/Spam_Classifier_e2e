@@ -93,7 +93,7 @@ jobs:
 
       - name: Setup DVC
         run: |
-          pip instal dvc dvc[s3] boto3
+          pip install dvc dvc[s3] boto3
       
       - name: Get Model From DVC
         run: |
