@@ -36,7 +36,9 @@ jobs:
 
       - name: Train And Evaluate Model
         run: |
-         python run.py --end-to-end --path "data/SMSSpamCollection" --num-labels 2 --num-epochs 2 --learning-rate 0.00001
+         python run.py --load-data --path "data/SMSSpamCollection"
+         python run.py --train-model --num-labels 2 --num-epochs 2 --learning-rate 0.00001
+         python run.py --evaluate-model
 
       - name: Configure DVC
         run: |
