@@ -93,7 +93,7 @@ jobs:
 
       - name: Setup DVC
         run: |
-          pip install dvc dvc[s3] boto3
+          pip install dvc==3.45.0 dvc[s3]==3.0.1 boto3==1.26.76
       
       - name: Get Model From DVC
         run: |
