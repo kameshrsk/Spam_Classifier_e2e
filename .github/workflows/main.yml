@@ -90,10 +90,6 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-
-      - name: Setup DVC
-        run: |
-          pip install dvc==3.45.0 dvc[s3]==3.0.1 boto3==1.26.76
       
       - name: Get Model From DVC
         run: |
@@ -126,5 +122,6 @@ jobs:
       - name: Clean previous images and Containers
 
         run: |
+          rm model.pkl
           docker system prune -f
       
