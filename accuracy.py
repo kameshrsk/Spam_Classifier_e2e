@@ -1,6 +1,6 @@
-from api import model_dict
+from steps.load_artifacts import load_scores
 
-accuracy=model_dict['accuracy']
+accuracy, f1=load_scores()
 
 with open('accuracy.txt', 'w') as file:
     file.write(str(accuracy))
