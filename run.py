@@ -96,6 +96,6 @@ def main(load_data:bool=False,
 
 if __name__=="__main__":
 
-    mlflow.set_tracking_uri("http://ec2-65-0-81-39.ap-south-1.compute.amazonaws.com:5000/")
+    mlflow.set_tracking_uri("http://ec2-13-232-240-44.ap-south-1.compute.amazonaws.com:5000/")
 
     main()

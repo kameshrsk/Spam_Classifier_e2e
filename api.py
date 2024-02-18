@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import uvicorn
-from get_model import model as loaded_model
 
 from message import Msg
 
@@ -9,7 +8,7 @@ import pickle
 
 import torch
 
-model_dict=loaded_model
+model_dict=pickle.load(open("model.pkl", "rb"))
 
 model=model_dict['model']
 

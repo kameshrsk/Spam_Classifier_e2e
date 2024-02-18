@@ -69,13 +69,6 @@ jobs:
          else
            echo "The Model achives as accuracy of $accuracy % which is good enough for deploymnet"
          fi
-
-      - name: Get Model From DVC
-        run: |
-          python get_model.py
-          git add get_model.py
-          git commit -m "${{ env.CI_COMMIT_MESSAGE }}"
-          git push
         
   cd_pipeline:
     runs-on: self-hosted
@@ -85,15 +78,24 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
         
-      - name: Set up AWS credentials
-        run: |
-         echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-         echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-         echo "AWS_REGION=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Setup DVC
+        run: |
+          pip instal dvc dvc[s3] boto3
+      
+      - name: Get Model From DVC
+        run: |
+          dvc get https://github.com/kameshrsk/Spam_Classifier_e2e saved_model/model.pkl
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
